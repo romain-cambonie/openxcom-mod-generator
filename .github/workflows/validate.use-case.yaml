@@ -1,0 +1,27 @@
+name: Python CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'build/*'
+      - 'chore/*'
+      - 'ci/*'
+      - 'docs/*'
+      - 'feat/*'
+      - 'fix/*'
+      - 'perf/*'
+      - 'refactor/*'
+      - 'revert/*'
+      - 'style/*'
+      - 'test/*'
+    paths-ignore:
+      - '**.md'
+
+jobs:
+  validation:
+    name: Validate on push
+    uses: codingones/github-actions-workflows/.github/workflows/checks-matrix.python.yml@main
+    with:
+      validation-commands: '["ruff check .", "black --check .", "pytest", "mypy src"]'
+      fail-fast: true

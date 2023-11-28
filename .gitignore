@@ -1,0 +1,10 @@
+.idea
+.ruff_cache
+venv
+__pycache__
+.pytest_cache
+output.txt
+.mypy_cache
+data/*
+!data/test_timeseries/*
+!data/test_timeseries_as_records/*

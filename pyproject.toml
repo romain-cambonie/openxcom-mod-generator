@@ -1,0 +1,55 @@
+[tool.poetry]
+name = "openxcom-generator"
+version = "1.0.0"
+description = ""
+authors = ["Romain Cambonie <romain.cambonie@gmail.com>"]
+readme = "README.md"
+
+[tool.black]
+line-length = 128
+
+[tool.mypy]
+ignore_missing_imports = true
+mypy_path = "src"
+check_untyped_defs = true
+disallow_any_generics = true
+disallow_subclassing_any = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+no_implicit_reexport = true
+namespace_packages = true
+explicit_package_bases = true
+strict_equality = true
+warn_redundant_casts = true
+warn_return_any = true
+warn_unreachable = true
+warn_unused_configs = true
+
+
+[tool.poetry.dependencies]
+python = "3.10.12"
+pyyaml = "6.0.1"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.0.292"
+black = "^23.9.1"
+pytest = "^7.4.2"
+pre-commit = "^3.5.0"
+conventional-pre-commit = "^2.4.0"
+mypy = "^1.6.1"
+
+[tool.poetry.scripts]
+start = "main:main"
+
+
+[tool.pytest.ini_options]
+python_files = "*_spec.py"
+
+[tool.ruff]
+line-length = 128
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
