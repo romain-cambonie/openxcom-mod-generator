@@ -1,9 +1,16 @@
 [tool.poetry]
-name = "openxcom-generator"
+name = "openxcomgenerator"
 version = "1.0.0"
 description = ""
 authors = ["Romain Cambonie <romain.cambonie@gmail.com>"]
 readme = "README.md"
+packages = [
+    { include = "openxcomgenerator", from = "src" },
+    { include = "conversion", from = "src" },
+    { include = "dalle", from = "src" },
+    { include = "gpt", from = "src" },
+    { include = "modding", from = "src" }
+]
 
 [tool.black]
 line-length = 128
@@ -27,10 +34,11 @@ warn_return_any = true
 warn_unreachable = true
 warn_unused_configs = true
 
-
 [tool.poetry.dependencies]
 python = "3.10.12"
 pyyaml = "6.0.1"
+requests = "^2.31.0"
+python-dotenv = "^1.0.0"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.0.292"
@@ -40,8 +48,13 @@ pre-commit = "^3.5.0"
 conventional-pre-commit = "^2.4.0"
 mypy = "^1.6.1"
 
+
+
 [tool.poetry.scripts]
-start = "main:main"
+start = "openxcomgenerator.main:main"  # Script for the main module
+convert = "conversion.convert_image_to_resource:main"  # Script for the conversion module
+generate_image = "dalle.image_generation:main"  # Script for the dalle module
+add_ufopedia_entry = "modding.add-ufopedia-entry:main"  # Script for the modding module
 
 
 [tool.pytest.ini_options]

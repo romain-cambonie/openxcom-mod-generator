@@ -1,11 +1,61 @@
-# OpenXcom Generator
+# OpenXcom AI Generator
+
+## Abstract
+
+The project roughly aims to create player customized content thanks to AI.
+The objective is to provide better player implication by creating more emotional attachment.
+
+Current state overview:
+- working semi-manual process to create Ufopedia articles for your soldiers character.
+
+Example result
+- Start:
+  ![Start Image](./docs/prude-alexis-original-image.png)
+
+- Generated from dalle-3:
+ ![Generation](./docs/prude-alexis.png)
+
+
+- After converting to game resource:
+  ![Game-ready](./docs/prude-alexis-ufopedia.png)
+
+
+## Pipeline
+
+The pipeline is roughly
+- gather information / image 
+  - manual - for now, take a screenshot
+- ask chatGPT to generate the corresponding dalle-3 prompt 
+  - manual - ask to describe image and generate a dalle prompt
+- execute prompt and get image
+- convert image to 8-bit indexed with the correct color palette 320x200 png
+- add the necessary yaml to the mod to create the corresponding UFOPedia entry
+- update the mod files
+- reload the mod in-game (toggle the mod in Mods)
+    ![Game-ready](./docs/reload-mod.png)
+
+## Scripts
+
+Each core module can be used as a standalone script.
+
+### Modules overview
+
+#### Dalle
+  responsible to imagine images through the Dalle-3 api
+#### Gpt
+  responsible to generate data from resources for other services
+#### Conversion
+  responsible to convert from an api response to a game ready image file
+#### Modding
+  responsible to generate the associated game file for the resources
+#### Openxcomgenerator
+  responsible for orchestration of the pipeline by calling the other modules
+
 
 ## Installation
 Be sure to execute this from a non-venv shell
 
 ```shell
-git clone git@github.com:bluemapping/compute.git
-cd compute
 virtualenv venv
 source .venv/bin/activate
 pip install poetry
@@ -15,6 +65,9 @@ pre-commit install --hook-type commit-msg
 ```
 
 ## Commands
+### Scripts
+
+TODO
 
 ### Tools
 - Check lint
@@ -39,14 +92,6 @@ poetry run mypy src
 ```
 
 ### Build
-- Build docker image locally
-```shell
-docker build -t compute .
-```
-- Run docker image locally
-```shell
-docker run --rm compute
-```
 
 ## Package management
 Poetry: https://python-poetry.org/

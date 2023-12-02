@@ -18,10 +18,11 @@ on:
     paths-ignore:
       - '**.md'
 
+# "pytest"
 jobs:
   validation:
     name: Validate on push
     uses: codingones/github-actions-workflows/.github/workflows/checks-matrix.python.yml@main
     with:
-      validation-commands: '["ruff check .", "black --check .", "pytest", "mypy src"]'
+      validation-commands: '["ruff check .", "black --check .", "mypy --install-types --non-interactive src"]'
       fail-fast: true

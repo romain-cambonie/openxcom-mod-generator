@@ -8,47 +8,6 @@ on:
 
 jobs:
   release:
-    uses: codingones/github-actions-workflows/.github/workflows/semantic-release.no-package.yml@main
+    uses: codingones/github-actions-workflows/.github/workflows/semantic-release.github-only.yml@main
     secrets:
       PAT: ${{ secrets.PAT }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_DEFAULT_REGION: ${{ vars.AWS_DEFAULT_REGION }}
-
-  trigger-registry:
-    needs:
-      - release
-    runs-on: ubuntu-latest
-    steps:
-      - name: Trigger registry
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          token: ${{ secrets.PAT }}
-          repository: ${{ github.repository_owner }}/registry-infrastructure
-          event-type: remote-trigger
-
-  notify-on-error:
-    needs:
-      - release
-    if: ${{ always() && (contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')) }}
-    uses: codingones/github-actions-workflows/.github/workflows/notify-discord.yml@main
-    with:
-      bot-username: Failures Bot
-      notification-content: 'A release has failed for ${{ github.repository }} this should not happen, invest some time in your CI/CD ?'
-      embed-title: Go to the workflow
-      embed-url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-    secrets:
-      DISCORD_WEBHOOK: ${{ secrets.DISCORD_FAILURES_WEBHOOK }}
-
-  notify-on-success:
-    needs:
-      - release
-    if: ${{ always() && needs.release.result == 'success' }}
-    uses: codingones/github-actions-workflows/.github/workflows/notify-discord.yml@main
-    with:
-      bot-username: Releases Bot
-      notification-content: 'A new ${{ github.repository }} version: ${{ needs.release.outputs.version }} has been released ! :tada:'
-      embed-title: Go to the changelog
-      embed-url: https://github.com/${{ github.repository }}/blob/main/docs/CHANGELOG.md
-    secrets:
-      DISCORD_WEBHOOK: ${{ secrets.DISCORD_RELEASES_WEBHOOK }}
