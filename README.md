@@ -23,8 +23,11 @@ Example result
 ## Pipeline
 
 The pipeline is roughly
-- gather information / image 
-  - manual - for now, take a screenshot
+- gather information / image
+  - on click in the inventory screen, signal the python pipeline to start and serialize the soldier definition for additional data to help generation
+  ![extract](docs/extracted-data.png)
+  - convert the yaml extract to full-text
+    - IN PROGRESS
 - ask chatGPT to generate the corresponding dalle-3 prompt 
   - manual - ask to describe image and generate a dalle prompt
 - execute prompt and get image
