@@ -26,18 +26,20 @@ The pipeline is roughly
 - gather information / image
   - on click in the inventory screen, signal the python pipeline to start and serialize the soldier definition for additional data to help generation
   ![extract](docs/extracted-data.png)
-  - convert the yaml extract to full-text
-    - IN PROGRESS
+  - convert the yaml extract to yaml payload with translations
+    ![extract](docs/translated-data.png)
 - ask chatGPT to generate the corresponding dalle-3 prompt 
+  - IN PROGRESS
   - manual - ask to describe image and generate a dalle prompt
 - execute prompt and get image
 - convert image to 8-bit indexed with the correct color palette 320x200 png
-- add the necessary yaml to the mod to create the corresponding UFOPedia entry
+- add the necessary yaml to the mod to create the corresponding UFOPedia entry~~~~
 - update the mod files
 - reload the mod in-game (toggle the mod in Mods)
     ![Game-ready](./docs/reload-mod.png)
 
-## Scripts
+
+
 
 Each core module can be used as a standalone script.
 
@@ -55,7 +57,7 @@ Each core module can be used as a standalone script.
   responsible for orchestration of the pipeline by calling the other modules
 
 
-## Installation
+## Installation for development
 Be sure to execute this from a non-venv shell
 
 ```shell
@@ -67,10 +69,19 @@ pre-commit install
 pre-commit install --hook-type commit-msg
 ```
 
-## Commands
-### Scripts
+## Commands / Scripts
 
-TODO
+### Local mod release for development
+Update the paths first to match your env
+```shell
+./scripts/local-mod-release.sh
+```
+
+### Generate release executable with dependencies
+The executable is produced in /dist and needs to be allowed to execute with 'chmod +x /dist/main' 
+```shell
+poetry run pyinstaller --onefile src/openxcomgenerator/main.py
+```
 
 ### Tools
 - Check lint

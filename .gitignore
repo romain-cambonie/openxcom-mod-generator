@@ -6,3 +6,6 @@ __pycache__
 .mypy_cache
 data/*
 .env
+build/
+dist/
+main.spec
