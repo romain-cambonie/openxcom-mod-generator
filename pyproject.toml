@@ -8,7 +8,8 @@ packages = [
     { include = "openxcomgenerator", from = "src" },
     { include = "conversion", from = "src" },
     { include = "dalle", from = "src" },
-    { include = "gpt", from = "src" },
+    { include = "chat", from = "src" },
+    { include = "image", from = "src" },
     { include = "modding", from = "src" }
 ]
 
@@ -40,6 +41,7 @@ pyyaml = "6.0.1"
 requests = "^2.31.0"
 python-dotenv = "^1.0.0"
 pillow = "^10.1.0"
+openai = "^1.3.8"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.0.292"

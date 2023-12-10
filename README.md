@@ -24,13 +24,21 @@ Example result
 
 The pipeline is roughly
 - gather information / image
-  - on click in the inventory screen, signal the python pipeline to start and serialize the soldier definition for additional data to help generation
-  ![extract](docs/extracted-data.png)
-  - convert the yaml extract to yaml payload with translations
-    ![extract](docs/translated-data.png)
-- ask chatGPT to generate the corresponding dalle-3 prompt 
+    - manual - take a screenshot of the inventory screen (must be 'screen000.png' in the user folder location)
+    - on click in the inventory screen, signal the python pipeline to start and serialize the soldier definition for additional data to help generation
+    ![extract](docs/extracted-data.png)
+    - convert the yaml extract to yaml payload with translations
+      ![extract](docs/translated-data.png)
+    - this yaml equipment_description (1)
+- describe image (GPT-4 Vision)
+  - rework screenshot into a valid 512x512 GPT-4 Vision input
+   ![extract](docs/image-cropped.png)
+  - ask GPT-4 Vision to describe the image
+  - this json is the appearance_description (2)
+- ask GPT-4 Completion to generate an origin story including the information extracted with (1) and (2)
+  - this text is the character_story (3)
+- ask GPT-4 Completion to generate a dalle-3 prompt with (1), (2) and (3)
   - IN PROGRESS
-  - manual - ask to describe image and generate a dalle prompt
 - execute prompt and get image
 - convert image to 8-bit indexed with the correct color palette 320x200 png
 - add the necessary yaml to the mod to create the corresponding UFOPedia entry~~~~
@@ -47,8 +55,10 @@ Each core module can be used as a standalone script.
 
 #### Dalle
   responsible to imagine images through the Dalle-3 api
-#### Gpt
+#### Chat
   responsible to generate data from resources for other services
+#### Image
+  responsible to transform images to valid payloads for services
 #### Conversion
   responsible to convert from an api response to a game ready image file
 #### Modding
