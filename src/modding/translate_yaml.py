@@ -1,16 +1,23 @@
+from pathlib import Path
+
 import yaml
 from typing import Any, Dict, List, Union
 
 
-def translate() -> None:
+def translate(
+    payload_path: Path,
+    language_path: Path,
+    locale: str,
+    payload_localized_output_path: Path,
+) -> str:
     # Load the payload and language files
-    with open("/home/yandros/Games/OpenXcom/share/openxcom/user/mods/TheCrew/GameData/payload.yaml", "r") as file:
+    with open(payload_path.as_posix(), "r") as file:
         payload: Dict[str, Any] = yaml.safe_load(file)
 
-    with open("/home/yandros/Games/OpenXcom/share/openxcom/user/mods/Piratez/Language/en-US.yml", "r") as file:
+    with open(language_path.as_posix(), "r") as file:
         language_data: Dict[str, Dict[str, str]] = yaml.safe_load(file)
 
-    language_translations: Dict[str, str] = language_data.get("en-US", {})
+    language_translations: Dict[str, str] = language_data.get(locale, {})
 
     root_keys_to_keep: List[str] = [
         "armor",
@@ -39,8 +46,10 @@ def translate() -> None:
     translated_payload: Dict[str, Any] = {k: translate_payload(v, language_translations) for k, v in processed_payload.items()}
 
     # Write the translated payload to a new file
-    with open("/home/yandros/Games/OpenXcom/share/openxcom/user/mods/TheCrew/GameData/payload-translated.yml", "w") as file:
+    with open(payload_localized_output_path.as_posix(), "w") as file:
         yaml.dump(translated_payload, file)
+
+    return str(translated_payload["name"])
 
 
 def process_items(data: Any, root_key: str) -> Any:

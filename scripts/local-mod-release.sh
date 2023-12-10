@@ -9,6 +9,7 @@ MOD_FILES_INSTALLATION_DIRECTORY="/home/yandros/Games/OpenXcom/share/openxcom/us
 # Release executable and copy to data mod files
 poetry run pyinstaller --onefile "$SOURCES_DEV_DIRECTORY/openxcomgenerator/main.py"
 cp "$DIST_DIRECTORY/main" "$MOD_FILES_DEV_DIRECTORY/Bin/main"
+cp "$SOURCES_DEV_DIRECTORY/.env" "$MOD_FILES_DEV_DIRECTORY/Bin/.env"
 chmod +x "$MOD_FILES_DEV_DIRECTORY/Bin/main"
 
 # Copy script to data mod files
