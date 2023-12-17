@@ -33,7 +33,13 @@ def describe_image(client: OpenAI, image_path: Path) -> str:
             {
                 "role": "user",
                 "content": [
-                    {"type": "text", "text": "Describe in details the character in this pixel-art image, respond in JSON."},
+                    {
+                        "type": "text",
+                        "text": "Describe in details the character in this pixel-art image, respond in JSON. Do NOT include "
+                        "in the answer the art style, background or atmosphere, only keep the keys appearance "
+                        "characteristics. If a trait is unidentifiable due to pixelation you are free to put a "
+                        "credible imagined value in place",
+                    },
                     {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{base64_image}", "detail": "low"}},
                 ],
             }
